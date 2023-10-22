@@ -1,8 +1,19 @@
+chrome.runtime.onInstalled.addListener(({
+    reason
+}) => {
+    if (reason === 'install') {
+        chrome.storage.local.set({
+            apiSuggestions: ["scripting", "activeTab", "cookies", "notifications"]
+        });
+    }
+});
+
+
 const notificationToLogIn = (callback) => {
     chrome.notifications.create({
-        iconUrl: 'images/icon-48.png',
+        iconUrl: 'images/icon-128.png',
         type: 'basic',
-        message: 'you need to login into AWBW and restart the extention',
+        message: 'you need to login into AWBW and click the extention to restart',
         title: 'AWBW Notifications'
     }, e => {
         callback();
@@ -33,9 +44,9 @@ const start = () => {
                             const password = cookie.value;
                             console.log("🚀 ~ file: background.js:14 ~ password:", password)
                             chrome.notifications.create({
-                                iconUrl: 'images/icon-48.png',
+                                iconUrl: 'images/icon-128.png',
                                 type: 'basic',
-                                message: 'Hey '+ username +' :) \nIt\'s your turn',
+                                message: 'Hey ' + username + ' :) \nIt\'s your turn',
                                 title: 'AWBW Notifications'
                             }, e => {
                                 console.log(e);
@@ -54,3 +65,10 @@ const start = () => {
     });
 }
 start();
+
+
+chrome.action.onClicked.addListener(tab => {
+    if(tab) {
+        start();
+    }
+});
