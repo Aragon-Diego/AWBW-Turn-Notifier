@@ -15,7 +15,7 @@ const notificationToLogIn = (callback) => {
         iconUrl: 'images/icon-128.png',
         type: 'basic',
         message: 'you need to login into AWBW and click the extention to restart',
-        title: 'AWBW Notifications'
+        title: 'AWBW Notifier'
     }, e => {
         callback();
     })
@@ -27,7 +27,7 @@ const notificationOfTurn = (username, callback) => {
         iconUrl: 'images/icon-128.png',
         type: 'basic',
         message: 'Hey ' + username + ' :) \nIt\'s your turn',
-        title: 'AWBW Notifications'
+        title: 'AWBW Notifier'
     }, e => {
         callback();
     })
