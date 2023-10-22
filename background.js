@@ -1,9 +1,10 @@
+const host = 'https://awbw.amarriner.com/index.php';
 chrome.runtime.onInstalled.addListener(({
     reason
 }) => {
     if (reason === 'install') {
         chrome.storage.local.set({
-            apiSuggestions: ["scripting", "activeTab", "cookies", "notifications"]
+            apiSuggestions: ["scripting", "activeTab", "cookies", "notifications", "alarms"]
         });
     }
 });
@@ -21,6 +22,26 @@ const notificationToLogIn = (callback) => {
 }
 
 
+const notificationOfTurn = (username, callback) => {
+    chrome.notifications.create({
+        iconUrl: 'images/icon-128.png',
+        type: 'basic',
+        message: 'Hey ' + username + ' :) \nIt\'s your turn',
+        title: 'AWBW Notifications'
+    }, e => {
+        callback();
+    })
+}
+
+
+const fetchHtml = async () => {
+    const response = await fetch(host, {
+        method: 'GET'
+    });
+    return await response.text();
+}
+
+
 const start = () => {
     chrome.cookies.get({
         url: 'http://awbw.amarriner.com',
@@ -28,39 +49,33 @@ const start = () => {
     }, cookie => {
         if (cookie) {
             const phpsessid = cookie.value;
-            console.log("🚀 ~ file: background.js:4 ~ phpsessid:", phpsessid);
             chrome.cookies.get({
                 url: 'http://awbw.amarriner.com',
                 name: 'awbw_username'
             }, cookie => {
                 if (cookie) {
                     const username = cookie.value;
-                    console.log("🚀 ~ file: background.js:14 ~ username:", username)
                     chrome.cookies.get({
                         url: 'http://awbw.amarriner.com',
                         name: 'awbw_password'
-                    }, cookie => {
+                    }, async cookie => {
                         if (cookie) {
                             const password = cookie.value;
-                            console.log("🚀 ~ file: background.js:14 ~ password:", password)
-                            chrome.notifications.create({
-                                iconUrl: 'images/icon-128.png',
-                                type: 'basic',
-                                message: 'Hey ' + username + ' :) \nIt\'s your turn',
-                                title: 'AWBW Notifications'
-                            }, e => {
-                                console.log(e);
-                            })
+                            const html = await fetchHtml();
+                            const alerts = html.match(/<span class="total-alerts">[0-9]*<\/span>/);
+                            if (alerts && Array.isArray(alerts)) {
+                                notificationOfTurn(username, ()=>{});
+                            }
                         } else {
-                            notificationToLogIn();
+                            notificationToLogIn(()=>{});
                         }
                     });
                 } else {
-                    notificationToLogIn();
+                    notificationToLogIn(()=>{});
                 }
             });
         } else {
-            notificationToLogIn();
+            notificationToLogIn(()=>{});
         }
     });
 }
@@ -68,7 +83,20 @@ start();
 
 
 chrome.action.onClicked.addListener(tab => {
-    if(tab) {
+    if (tab) {
+        start();
+    }
+});
+
+
+chrome.alarms.create("5min", {
+    delayInMinutes: 5,
+    periodInMinutes: 5
+});
+
+
+chrome.alarms.onAlarm.addListener(function (alarm) {
+    if (alarm.name === "5min") {
         start();
     }
 });

@@ -23,7 +23,7 @@
   "host_permissions": [
     "*://awbw.amarriner.com/"
   ],
-  "permissions": ["storage", "scripting", "activeTab", "cookies", "notifications"],
+  "permissions": ["storage", "scripting", "activeTab", "cookies", "notifications", "alarms"],
   "commands": {
     "_execute_action": {
       "suggested_key": {
