@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(({
 }) => {
     if (reason === 'install') {
         chrome.storage.local.set({
-            apiSuggestions: ["scripting", "activeTab", "cookies", "notifications", "alarms"]
+            apiSuggestions: ["scripting", "cookies", "notifications", "alarms"]
         });
     }
 });
@@ -26,7 +26,7 @@ const notificationOfTurn = (username, callback) => {
     chrome.notifications.create({
         iconUrl: 'images/icon-128.png',
         type: 'basic',
-        message: 'Hey ' + username + ' :) \nIt\'s your turn',
+        message: 'Hey ' + username +  ' :)\nIt\'s your turn',
         title: 'AWBW Notifier'
     }, e => {
         callback();
