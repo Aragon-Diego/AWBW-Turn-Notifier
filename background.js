@@ -89,14 +89,14 @@ chrome.action.onClicked.addListener(tab => {
 });
 
 
-chrome.alarms.create("5min", {
-    delayInMinutes: 5,
-    periodInMinutes: 5
+chrome.alarms.create("2min", {
+    delayInMinutes: 2,
+    periodInMinutes: 2
 });
 
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
-    if (alarm.name === "5min") {
+    if (alarm.name === "2min") {
         start();
     }
 });
