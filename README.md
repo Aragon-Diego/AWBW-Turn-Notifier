@@ -4,7 +4,7 @@
 
 1. Download the source code
 2. Open Google Chrome
-3. Go to [extensions](chrome://extensions/)(chrome://extensions/)
+3. Go to [extensions](chrome://extensions/) (chrome://extensions/)
 4. Click On Manage Extensions
 5. Turn On Developer Option
 6. Click on load unpdacked
