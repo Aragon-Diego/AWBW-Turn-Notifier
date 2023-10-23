@@ -34,6 +34,18 @@ const notificationOfTurn = (username, callback) => {
 }
 
 
+const notificationNonTurn = (callback) => {
+    chrome.notifications.create({
+        iconUrl: 'images/icon-128.png',
+        type: 'basic',
+        message: 'It\'s not your turn',
+        title: 'AWBW Notifier'
+    }, e => {
+        callback();
+    })
+}
+
+
 const fetchHtml = async () => {
     const response = await fetch(host, {
         method: 'GET'
@@ -42,7 +54,7 @@ const fetchHtml = async () => {
 }
 
 
-const start = () => {
+const start = (action) => {
     chrome.cookies.get({
         url: 'http://awbw.amarriner.com',
         name: 'PHPSESSID'
@@ -65,6 +77,8 @@ const start = () => {
                             const alerts = html.match(/<span class="total-alerts">[0-9]*<\/span>/);
                             if (alerts && Array.isArray(alerts)) {
                                 notificationOfTurn(username, ()=>{});
+                            } else if(action == 'reset') {
+                                notificationNonTurn(()=>{});
                             }
                         } else {
                             notificationToLogIn(()=>{});
@@ -84,7 +98,7 @@ start();
 
 chrome.action.onClicked.addListener(tab => {
     if (tab) {
-        start();
+        start('reset');
     }
 });
 
