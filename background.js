@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(({
 }) => {
     if (reason === 'install') {
         chrome.storage.local.set({
-            apiSuggestions: ["scripting", "cookies", "notifications", "alarms"]
+            apiSuggestions: ["cookies", "notifications", "alarms"]
         });
     }
 });
