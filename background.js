@@ -64,26 +64,16 @@ const start = (action) => {
             chrome.cookies.get({
                 url: 'http://awbw.amarriner.com',
                 name: 'awbw_username'
-            }, cookie => {
+            }, async cookie => {
                 if (cookie) {
                     const username = cookie.value;
-                    chrome.cookies.get({
-                        url: 'http://awbw.amarriner.com',
-                        name: 'awbw_password'
-                    }, async cookie => {
-                        if (cookie) {
-                            const password = cookie.value;
-                            const html = await fetchHtml();
-                            const alerts = html.match(/<span class="total-alerts">[0-9]*<\/span>/);
-                            if (alerts && Array.isArray(alerts)) {
-                                notificationOfTurn(username, ()=>{});
-                            } else if(action == 'reset') {
-                                notificationNonTurn(()=>{});
-                            }
-                        } else {
-                            notificationToLogIn(()=>{});
-                        }
-                    });
+                    const html = await fetchHtml();
+                    const alerts = html.match(/<span class="total-alerts">[0-9]*<\/span>/);
+                    if (alerts && Array.isArray(alerts)) {
+                        notificationOfTurn(username, ()=>{});
+                    } else if(action == 'reset') {
+                        notificationNonTurn(()=>{});
+                    }
                 } else {
                     notificationToLogIn(()=>{});
                 }
