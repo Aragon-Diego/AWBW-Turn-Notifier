@@ -94,8 +94,7 @@ chrome.action.onClicked.addListener(tab => {
 
 
 chrome.alarms.create("2min", {
-    delayInMinutes: 2,
-    periodInMinutes: 2
+    delayInMinutes: 1
 });
 
 

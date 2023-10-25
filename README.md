@@ -11,7 +11,9 @@
 7. Enjoy :)
 
 ## How to install using the Chrome Web Store
-... we are working on that
+1. Go to the [Chrome Web Store](https://chrome.google.com/webstore/detail/awbw-notifications/lgmjmmdgchhdobneapjjfieegghdfmmm?hl=es-419&authuser=0)
+2. Click install
+3. Enjoy :)
 
 ## How to use
 
